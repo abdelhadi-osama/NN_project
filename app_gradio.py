@@ -12,11 +12,11 @@ import ast  # Safely evaluate strings like "[128, 64]"
 sys.path.append(os.getcwd())
 
 # Import your custom modules
-from NN_project.data_pipeline.data_loader import DataLoader
-from NN_project.data_pipeline.preprocessor import Preprocessor
-from NN_project.pipeline.pipeline import NeuralNetworkPipeline
-from NN_project.evaluation.evaluator import Evaluator
-from NN_project.data_pipeline.data_generator import DataGenerator
+from data_pipeline.data_loader import DataLoader
+from data_pipeline.preprocessor import Preprocessor
+from pipeline.pipeline import NeuralNetworkPipeline
+from evaluation.evaluator import Evaluator
+from data_pipeline.data_generator import DataGenerator
 
 # --- GLOBAL STATE ---
 current_pipeline = None
@@ -26,7 +26,7 @@ test_data_bundle = None # Store (x_test, y_test) for evaluation later
 
 def load_default_config():
     """Loads the base config to populate initial UI values"""
-    with open('NN_project/config/config.yml', 'r') as f:
+    with open('config/config.yml', 'r') as f:
         return yaml.safe_load(f)
 
 # ---------------------------------------------------------
