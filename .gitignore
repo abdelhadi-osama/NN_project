@@ -1,0 +1,17 @@
+# 1. Python Artifacts (Bytecode)
+__pycache__/
+*.pyc
+
+# 2. Virtual Environments (uv / pip)
+.venv/
+venv/
+env/
+
+# 3. Data & Models (Generated at runtime)
+# We ignore these because your code downloads/creates them automatically.
+data/
+saved_models/
+logs/
+
+# 4. OS Files
+.DS_Store

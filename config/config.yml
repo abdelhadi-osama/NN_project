@@ -1,0 +1,114 @@
+# --- PROJECT SETTINGS ---
+project:
+  name: "Universal_Neural_Network"
+  seed: 42
+  log_level: "INFO"
+
+# --- PATHS ---
+paths:
+  raw_data: "NN_project/data"
+  logs: "logs"
+  saved_models: "saved_models"
+
+# --- DATASET PROFILES ---
+datasets:
+  
+  # ==========================================
+  # PROFILE 1: Breast Cancer (Tabular)
+  # ==========================================
+  breast_cancer:
+    type: "tabular"
+    
+    # 1. DATA CONFIG (Merged from your file)
+    data_config:
+      source_type: "csv"
+      test_split: 0.2
+      val_split: 0.1
+      label_column: 1
+      drop_columns: [0] # Drops ID column
+      urls:
+        data: "https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/wdbc.data"
+      files:
+        data: "wdbc.data"
+      target_encoding:
+        M: 1
+        B: 0
+
+    # 2. MODEL ARCHITECTURE
+    model:
+      architecture: [16, 8, 1] 
+      activations: ["relu", "relu", "sigmoid"]
+      weight_init: "auto"
+      loss_function: "BCE"
+      
+      # Model Parameters (Merged)
+      epsilon: 1.0e-15        # For BCE stability
+      regularization: "L2"
+      l_lambda: 0.0001
+      dropout_rates: [0.0, 0.0]
+
+    # 3. TRAINING SETTINGS
+    training:
+      epochs: 200
+      batch_size: 32
+      learning_rate: 0.01
+
+  # ==========================================
+  # PROFILE 2: MNIST (Image)
+  # ==========================================
+  mnist:
+    type: "image_flattened"
+    
+    # 1. DATA CONFIG (Merged from your file)
+    data_config:
+      source_type: "gzip"
+      val_split: 0.1
+      urls:
+        train_images: "https://storage.googleapis.com/cvdf-datasets/mnist/train-images-idx3-ubyte.gz"
+        train_labels: "https://storage.googleapis.com/cvdf-datasets/mnist/train-labels-idx1-ubyte.gz"
+        test_images:  "https://storage.googleapis.com/cvdf-datasets/mnist/t10k-images-idx3-ubyte.gz"
+        test_labels:  "https://storage.googleapis.com/cvdf-datasets/mnist/t10k-labels-idx1-ubyte.gz"
+      files:
+        train_images: "train-images-idx3-ubyte.gz"
+        train_labels: "train-labels-idx1-ubyte.gz"
+        test_images:  "t10k-images-idx3-ubyte.gz"
+        test_labels:  "t10k-labels-idx1-ubyte.gz"
+      target_encoding: "one_hot"
+
+    # 2. MODEL ARCHITECTURE
+    model:
+      architecture: [128, 64,10]
+      activations: ["relu", "relu", "sigmoid"]
+      weight_init: "auto"
+      loss_function: "BCE" # Or CCE if you implement it
+      
+      # Model Parameters
+      epsilon: 1.0e-15
+      regularization: "L2"
+      l_lambda: 0.001
+      dropout_rates: [0.0, 0.0]
+
+    # 3. TRAINING SETTINGS
+    training:
+      epochs: 10
+      batch_size: 64
+      learning_rate: 0.001
+
+# --- GLOBAL OPTIMIZER SETTINGS ---
+optimizer:
+  method: "adam"
+  beta1: 0.9
+  beta2: 0.999
+  epsilon: 1.0e-08
+
+# --- GLOBAL SCHEDULER SETTINGS ---
+scheduler:
+  # Options: "constant", "time_based", "step_decay", "exponential"
+  method: "step_decay"  
+  
+  # Parameters (Used based on selected method)
+  decay_rate: 0.01      
+  step_size: 10         
+  gamma: 0.5              
+  t_max: 50             
+  eta_min: 0.00001
