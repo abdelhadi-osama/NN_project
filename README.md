@@ -82,12 +82,12 @@ You can choose between the standard pip method or the ultra-fast uv manager.
                    2- Initialize & Sync: This will automatically create the virtual environment and install dependencies from pyproject.toml.
                              - git clone https://github.com/abdelhadi-osama/NN_project.git
                               - cd NN_project
-
+                              -uv sync
                         Activate Environment:
                                 Bash
                                 source .venv/bin/activate
                                 # On Windows: .venv\Scripts\activate
-                              -uv sync
+                              
                          
                   
                           
